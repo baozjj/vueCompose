@@ -1,5 +1,5 @@
 <template>
-  <dragDemo></dragDemo>
+  <dragDemo/>
 </template>
 
 <script setup lang="ts">
