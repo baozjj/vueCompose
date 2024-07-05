@@ -40,13 +40,12 @@ export const useDraggable = (
 
   const setStaticStyle = () => {
     if (!useDefaultStyles || !elementRef.value) return
-    elementRef.value!.classList.remove('use-dragging')
+    elementRef.value.classList.remove('use-dragging')
     elementRef.value.classList.add('use-draggable')
   }
 
   const setActiveStyle = () => {
     if (!useDefaultStyles || !elementRef.value) return
-    elementRef.value!.classList.remove('use-draggable')
     elementRef.value.classList.add('use-dragging')
   }
 
@@ -73,8 +72,8 @@ export const useDraggable = (
       return;
     }
 
-    draggingElement?.addEventListener('pointermove', onPointerMove, capture);
-    draggingElement?.addEventListener('pointerup', onPointerUp, capture);
+    draggingElement?.addEventListener('pointermove', onPointerMove as EventListener, capture);
+    draggingElement?.addEventListener('pointerup', onPointerUp as EventListener, capture);
   };
 
   const onPointerMove = (event: PointerEvent) => {
@@ -90,7 +89,7 @@ export const useDraggable = (
     }
 
     if (containerElement) {
-      const boundaryRect = containerElement.value.getBoundingClientRect();
+      const boundaryRect = containerElement.value!.getBoundingClientRect();
       const elementRect = elementRef.value!.getBoundingClientRect();
 
       newX = Math.max(boundaryRect.left, Math.min(boundaryRect.right - elementRect.width, newX));
@@ -111,8 +110,8 @@ export const useDraggable = (
     setStaticStyle()
 
     isDragging.value = false;  // 设置拖动结束
-    draggingElement?.removeEventListener('pointermove', onPointerMove, capture);
-    draggingElement?.removeEventListener('pointerup', onPointerUp, capture);
+    draggingElement?.removeEventListener('pointermove', onPointerMove as EventListener, capture);
+    draggingElement?.removeEventListener('pointerup', onPointerUp as EventListener, capture);
 
     if (onEnd) {
       onEnd(position.value, event);  // 调用 onEnd 回调
@@ -122,7 +121,7 @@ export const useDraggable = (
   const initPosition = () => {
     let { x, y } = position.value
     if (containerElement) {
-      const boundaryRect = containerElement.value.getBoundingClientRect();
+      const boundaryRect = containerElement.value!.getBoundingClientRect();
       const elementRect = elementRef.value!.getBoundingClientRect();
       x = Math.max(boundaryRect.left, Math.min(boundaryRect.right - elementRect.width, x));
       y = Math.max(boundaryRect.top, Math.min(boundaryRect.bottom - elementRect.height, y));
@@ -137,10 +136,16 @@ export const useDraggable = (
     handle.value!.style.cursor = 'move'
     setStaticStyle()
     initPosition()
+    if (containerElement) {
+      window.addEventListener('scroll', initPosition)
+    }
   });
 
   onUnmounted(() => {
     handle.value?.removeEventListener('pointerdown', onPointerDown, capture);  // 组件卸载时解绑 pointerdown 事件
+    if (containerElement) {
+      window.removeEventListener('scroll', initPosition)
+    }
   });
 
   return {
