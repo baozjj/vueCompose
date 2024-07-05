@@ -1,14 +1,13 @@
 <template>
   <div ref="box" class="box">
-    <div ref="dragDemo1" class='container' @click="console.log(111)">
-      <button @click="console.log(222)">按钮</button>
-      <button ref="btn" >按钮123</button>
+    <div ref="dragDemo1" class='container'>
+      {{ `x: ${Number(dragDemo1Position.x).toFixed(2)}` }}
       <br>
-      {{ `x: ${dragDemo1Position.x}` }}
-      <br>
-        {{  `y: ${dragDemo1Position.y}` }}
+      {{  `y: ${Number(dragDemo1Position.y).toFixed(2)}` }}
     </div>
   </div>
+
+  <div ref="dragDemo2" class='container' />
 
 
 </template>
@@ -18,8 +17,8 @@ import { onUnmounted, ref, watch } from 'vue'
 import { useDraggable } from './index'
 import type { IPosition } from './types'
 const dragDemo1 = ref<HTMLElement | null>(null)
+const dragDemo2 = ref<HTMLElement | null>(null)
 const box = ref<HTMLElement | null>(null)
-const btn = ref<HTMLElement | null>(null)
 
 const onStart = () => {
   console.log('onStart')
@@ -43,19 +42,30 @@ const { position: dragDemo1Position } = useDraggable(dragDemo1, {
   containerElement: box,
   // handle: btn
 })
+useDraggable(dragDemo2, {
+  initialValue: {
+    x: 250,
+    y: 250
+  },
+})
 
 
 </script>
 
 <style scoped lang='stylus'>
 .box 
-  margin-left: 200px;
-  margin-top: 200px;
-  width: 200px
-  height: 200px
+
+  width: 400px
+  height: 400px
   border: 1px solid red
 .container 
+  display: flex
+  justify-content: center
+  align-items: center
   width: 100px
   height: 100px
-  background: red
+  padding: 10px
+  border-radius: 5px;
+  font-size: 14px
+  background-color #fff
 </style>
