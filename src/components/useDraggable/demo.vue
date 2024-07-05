@@ -41,7 +41,7 @@ const { position: dragDemo1Position } = useDraggable(dragDemo1, {
     y: 250
   },
   containerElement: box,
-  handle: btn
+  // handle: btn
 })
 
 
