@@ -1,11 +1,14 @@
 <template>
-  <div ref="box" class="box">
-    <div ref="dragDemo1" class='container'>
-      {{ `x: ${Number(dragDemo1Position.x).toFixed(2)}` }}
-      <br>
-      {{  `y: ${Number(dragDemo1Position.y).toFixed(2)}` }}
+  <Card class="card-content">
+    <div ref="box" class="box">
+      <div ref="dragDemo1" class='container'>
+        {{ `x: ${Number(dragDemo1Position.x).toFixed(2)}` }}
+        <br>
+        {{  `y: ${Number(dragDemo1Position.y).toFixed(2)}` }}
+      </div>
     </div>
-  </div>
+  </Card>
+
 
   <div ref="dragDemo2" class='container' />
 
@@ -13,7 +16,8 @@
 </template>
 
 <script lang='ts' setup >
-import { onUnmounted, ref, watch } from 'vue'
+import { ref } from 'vue'
+import { Card } from 'ant-design-vue';
 import { useDraggable } from './index'
 import type { IPosition } from './types'
 const dragDemo1 = ref<HTMLElement | null>(null)
@@ -53,11 +57,14 @@ useDraggable(dragDemo2, {
 </script>
 
 <style scoped lang='stylus'>
+.card-content
+  display: flex
+  justify-content: center
+  align-items: center
 .box 
-
   width: 400px
   height: 400px
-  border: 1px solid red
+  border: 2px solid #c1c1c1
 .container 
   display: flex
   justify-content: center

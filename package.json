@@ -16,6 +16,7 @@
     "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
+    "ant-design-vue": "^4.2.3",
     "vue": "^3.4.29"
   },
   "devDependencies": {
