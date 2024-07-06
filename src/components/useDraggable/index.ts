@@ -1,13 +1,13 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import type { Ref } from 'vue';
-import type { IPosition, IUseDraggableOptions } from './types';
+import type { IPosition, IUseDraggableOptions, IUseDraggableRes } from './types';
 import { AxisEnum } from './types';
 import './style.css'
 
 export const useDraggable = (
   elementRef: Ref<HTMLElement | null>,
-  options: IUseDraggableOptions = {}
-) => {
+  options: IUseDraggableOptions = {},
+): IUseDraggableRes => {
   const {
     exact = false,  // 默认不需要精确点击
     preventDefault = false,  // 默认不阻止事件默认行为
@@ -22,13 +22,17 @@ export const useDraggable = (
     onMove,
     onEnd,
     axis = AxisEnum.BOTH,  // 默认可以沿 x 和 y 轴拖动
-    disabled = false,  // 默认不禁用拖动
     useDefaultStyles = true,  // 默认启用默认样式
   } = options;
 
   const isDragging = ref(false);  // 是否正在拖动
   const position = ref<IPosition>(initialValue);  // 当前拖动位置
   const offset = ref<IPosition>({ x: 0, y: 0 });  // 拖动起始时的偏移量
+  const disabled = ref(false);
+
+  const setDisabled = (status: boolean) => {
+    disabled.value = status;
+  }
 
   const setElementPosition = (x: number, y: number) => {
     Object.assign(elementRef.value!.style, {
@@ -50,10 +54,10 @@ export const useDraggable = (
   }
 
   const onPointerDown = (event: PointerEvent) => {
-    if (disabled) return;  // 如果禁用拖动，则直接返回
+    if (disabled.value) return;  // 如果禁用拖动，则直接返回
     if (!pointerTypes.includes(event.pointerType)) return;  // 如果指针类型不在监听列表中，则返回
 
-    const target = handle?.value || event.target;  // 如果有句柄，则使用句柄，否则使用事件目标
+    const target = handle?.value || event.target;  // 如果有指定的触发元素，则使用该元素，否则使用事件目标
     if (exact && event.target !== elementRef.value) return;  // 如果需要精确点击且目标不是绑定元素，则返回
     
     setActiveStyle()
@@ -151,5 +155,6 @@ export const useDraggable = (
   return {
     isDragging,
     position,
+    setDisabled
   };
 }
