@@ -11,7 +11,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: '快速入门', link: '/' },
-      { text: 'API 示例', link: '/api-examples' }
+      { text: 'API 示例', link: '/components/useDraggable/useDraggable.md' }
     ],
 
     sidebar: [  
@@ -21,5 +21,7 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/baozjj/vueCompose' }
     ]
-  }
+  },
+  appearance: true,
+
 })
