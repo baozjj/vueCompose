@@ -50,6 +50,13 @@ const { position: dragEl2Position, setDisabled } = useDraggable(dragDemo2, {
 </script>
 ```
 
+## 参数
+
+| 参数      | 类型                      | 说明                           |
+| --------- | ------------------------- | ------------------------------ |
+| `element` | `Ref<HTMLElement\| null>` | 监听鼠标进入事件的元素的引用。 |
+| `options` | `IUseDraggableOptions`    | 拖拽功能的配置选项。           |
+
 ## 配置选项
 
 `useDraggable` 提供了多种配置选项，使得你可以根据需要灵活地实现拖动功能。
@@ -66,9 +73,7 @@ const { position: dragEl2Position, setDisabled } = useDraggable(dragDemo2, {
 | `axis`             | `'x' \| 'y' \| 'both'`                                                       | `'both'`         | 指定拖动的方向。可以设置为 `'x'`、`'y'` 或 `'both'`。          |
 | `useDefaultStyle`  | `boolean`                                                                    | `true`           | 是否启用默认样式。                                             |
 
-## 解构结果
-
-`useDraggable` 会返回以下几个值：
+## 返回值
 
 | 解构结果      | 类型                            | 说明                           |
 | ------------- | ------------------------------- | ------------------------------ |

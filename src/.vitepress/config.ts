@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 
 const Element = [
   { text: 'useDraggable', link: '/components/useDraggable/useDraggable.md' },
+  { text: 'useMouseEnterDirection', link: '/components/useMouseEnterDirection/useMouseEnterDirection.md' },
 ]
 
 // https://vitepress.dev/reference/site-config
